@@ -1,0 +1,12 @@
+{
+  "name": "evolutioncms/custom",
+  "require": {
+  },
+  "autoload": {
+    "psr-4": {
+      "EvolutionCMS\\SeriousCustom\\": "packages/seriouscustomtemplate/src/",
+      "EvolutionCMS\\Custom\\": "packages/example/src/"
+
+    }
+  }
+}

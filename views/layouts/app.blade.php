@@ -2,22 +2,21 @@
 <html lang="{{ $modx->getConfig('lang_code') }}">
 	@section('head')
 		<head>
-			<meta http-equiv="Content-Type" content="text/html; charset={{ $modx->getConfig('modx_charset') }}" /> 
+			<meta http-equiv="Content-Type" content="text/html; charset="{{ $modx->getConfig('modx_charset') }}" />
 			
-			<title>@evoParser($documentObject['titl'])</title>
-			{{ $documentObject['noindex'] }}
-			<meta name="keywords" content="@evoParser($documentObject['keyw'])" />
-			<meta name="description" content="@evoParser($documentObject['desc'])" />
+			<title>{{ $meta['title'] }}</title>
+			<meta name="keywords" content="{{ $meta['keywords'] }}" />
+			<meta name="description" content="{{ $meta['description'] }}" />
 
 			<base href="{{ $modx->getConfig('site_url') }}"/>
 
 			<meta name="viewport" content="width=device-width, initial-scale=1">
 			<meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-			@if ( $modx->getConfig('site_start') == $modx->documentObject['id'] )
+			@if ( $modx->config['site_start'] == $documentObject['id'] )
 				<link href="{{ $modx->getConfig('site_url') }}" rel="canonical">
 			@else
-				<link href="{{ urlProcessor::makeUrl('2','','','full') }}" rel="canonical">
+				<link href="@makeUrl($documentObject['id'],'','','full')" rel="canonical">
 			@endif
 			
 			<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet" type="text/css">	
@@ -43,7 +42,7 @@
 						<div class="bread">
 
 							@if ( $modx->getConfig('site_start') != $documentObject['id'] )
-								{!! $modx->runSnippet('DLCrumbs',['showCurrent' => '1']) !!}
+								@include('partials.crumbs')
 							@endif
 							
 						</div>
@@ -53,10 +52,10 @@
 				<div class="row content">
 
 					<div class="col-sm-8">
-						<h1>@evoParser($documentObject['longtitle'])</h1>
+						<h1>{{ $documentObject['longtitle'] }}</h1>
 						
 						@section('content')
-							@evoParser($documentObject['content'])
+							{!! $documentObject['content'] !!}
 						@show
 				
 						@if ($documentObject['parent'] == 2 )
@@ -75,8 +74,5 @@
 		@section('footer')
 			@include('partials.footer')
 		@show
-		@php
-			//dump($modx->documentObject)
-		@endphp
 	</body>
 </html>
